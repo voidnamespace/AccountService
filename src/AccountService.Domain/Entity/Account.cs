@@ -2,23 +2,23 @@
 
 public class Account
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; private set; }
 
-    public Guid UserId { get; set; }
-    public string AccountNumber { get; set; } = default!;
-    public decimal Balance { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public Guid UserId { get; private set; }
+    public string AccountNumber { get; private set; } = default!;
+    public decimal Balance { get; private set; }
+    public DateTime CreatedAt { get; private set; }
 
-    public DateTime UpdatedAt { get; set; }
+    public DateTime UpdatedAt { get; private set; }
 
-    public bool IsActive { get; set; }
+    public bool IsActive { get; private set; }
 
     private Account() { }
-    public Account (Guid userId)
+    public Account (Guid userId, string accountNumber)
     {
         Id = Guid.NewGuid();
         UserId = userId;
-        AccountNumber = GenerateAccountNumber();
+        AccountNumber = accountNumber;
         Balance = 0;
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
@@ -39,22 +39,22 @@ public class Account
 
     public void Withdraw (decimal amount)
     {
-        if (amount < 0)
+        if (amount <= 0)
             throw new ArgumentException("Amount must be greater than zero");
         if (amount > Balance)
-            throw new ArgumentException($"insufficient balance");
+            throw new InvalidOperationException($"insufficient balance");
         Balance -= amount;
         UpdatedAt = DateTime.UtcNow;
     }
     public void AddBalance (decimal amount)
     {
-        if (amount < 0)
+        if (amount <= 0)
             throw new ArgumentException("Amount must be greater than zero");
         Balance += amount;
         UpdatedAt = DateTime.UtcNow;
     }
 
-    public static string GenerateAccountNumber()
+    public string GenerateAccountNumber()
     {
         return Random.Shared.NextInt64(100000000000, 999999999999).ToString();
     }
