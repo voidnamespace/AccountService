@@ -1,11 +1,12 @@
-﻿namespace AccountService.Domain.Entity;
+﻿using AccountService.Domain.ValueObjects;
+namespace AccountService.Domain.Entity;
 
 public class Account
 {
     public Guid Id { get; private set; }
 
     public Guid UserId { get; private set; }
-    public string AccountNumber { get; private set; } = default!;
+    public AccountNumberVO AccountNumber { get; private set; } = default!;
     public decimal Balance { get; private set; }
     public DateTime CreatedAt { get; private set; }
 
@@ -14,7 +15,7 @@ public class Account
     public bool IsActive { get; private set; }
 
     private Account() { }
-    public Account (Guid userId, string accountNumber)
+    public Account (Guid userId, AccountNumberVO accountNumber)
     {
         Id = Guid.NewGuid();
         UserId = userId;
@@ -39,6 +40,8 @@ public class Account
 
     public void Withdraw (decimal amount)
     {
+        if (!IsActive)
+            throw new InvalidOperationException("Account is inactive");
         if (amount <= 0)
             throw new ArgumentException("Amount must be greater than zero");
         if (amount > Balance)
@@ -46,17 +49,13 @@ public class Account
         Balance -= amount;
         UpdatedAt = DateTime.UtcNow;
     }
-    public void AddBalance (decimal amount)
+    public void Deposit (decimal amount)
     {
+        if (!IsActive)
+            throw new InvalidOperationException("Account is inactive");
         if (amount <= 0)
             throw new ArgumentException("Amount must be greater than zero");
         Balance += amount;
         UpdatedAt = DateTime.UtcNow;
     }
-
-    public string GenerateAccountNumber()
-    {
-        return Random.Shared.NextInt64(100000000000, 999999999999).ToString();
-    }
-
 }

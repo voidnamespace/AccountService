@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace AccountService.Infrastucture.Repositories;
 
-namespace AccountService.Infrastucture.Repositories
+public class AccountRepository
 {
-    internal class AccountRepository
-    {
-    }
+
 }
