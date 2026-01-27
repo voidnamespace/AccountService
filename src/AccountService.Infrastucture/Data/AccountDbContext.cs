@@ -1,12 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using AccountService.Domain.Entity;
-namespace AccountService.Infrastucture.Data;
+namespace AccountService.Infrastructure.Data;
 
 public class AccountDbContext : DbContext
 {
-    public AccountDbContext(DbContextOptions options) : base(options)
+    public AccountDbContext(DbContextOptions<AccountDbContext> options)
+    : base(options)
     {
     }
+
 
     public DbSet<Account> Accounts { get; set; }
 

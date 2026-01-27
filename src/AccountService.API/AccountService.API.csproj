@@ -12,6 +12,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AccountService.Application\AccountService.Application.csproj" />
+    <ProjectReference Include="..\AccountService.Infrastructure\AccountService.Infrastructure.csproj" />
+    <ProjectReference Include="..\AccountService.Infrastucture\AccountService.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

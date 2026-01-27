@@ -8,6 +8,6 @@
     <Project Path="src/AccountService.API/AccountService.API.csproj" />
     <Project Path="src/AccountService.Application/AccountService.Application.csproj" />
     <Project Path="src/AccountService.Domain/AccountService.Domain.csproj" />
-    <Project Path="src/AccountService.Infrastucture/AccountService.Infrastucture.csproj" />
+    <Project Path="src/AccountService.Infrastucture/AccountService.Infrastructure.csproj" />
   </Folder>
 </Solution>

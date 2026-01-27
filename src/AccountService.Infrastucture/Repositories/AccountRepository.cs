@@ -1,6 +1,8 @@
-﻿namespace AccountService.Infrastucture.Repositories;
+﻿using AccountService.Application.Interfaces;
 
-public class AccountRepository
+namespace AccountService.Infrastructure.Repositories;
+
+public class AccountRepository : IAccountRepository
 {
 
 }
