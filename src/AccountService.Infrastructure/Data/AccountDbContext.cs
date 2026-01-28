@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using AccountService.Domain.Entity;
+﻿using AccountService.Domain.Entity;
+using AccountService.Domain.ValueObjects;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccountService.Infrastructure.Data;
 
 public class AccountDbContext : DbContext
@@ -17,7 +19,9 @@ public class AccountDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-
+        var accountNumberConverter = new ValueConverter<AccountNumberVO, string>(
+        vo => vo.Value,
+        value => new AccountNumberVO(value));
 
         modelBuilder.Entity<Account>(entity =>
         {
@@ -30,6 +34,7 @@ public class AccountDbContext : DbContext
             entity.HasIndex(u => u.AccountNumber)
             .IsUnique();
             entity.Property(u => u.AccountNumber)
+            .HasConversion(accountNumberConverter)
             .IsRequired()
             .HasMaxLength(12);
 
