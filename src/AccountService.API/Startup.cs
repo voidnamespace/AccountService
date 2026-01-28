@@ -1,4 +1,5 @@
-﻿using AccountService.Infrastructure.Extensions;
+﻿using AccountService.Application.Commands.CreateAccount;
+using AccountService.Infrastructure.Extensions;
 namespace AccountService.API;
 
 public class Startup
@@ -13,6 +14,8 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssembly(typeof(CreateAccountCommand).Assembly));
         services.AddControllers(); // регистрирует контроллеры
         services.AddEndpointsApiExplorer();
         services.AddDatabaseConfiguration(Configuration);

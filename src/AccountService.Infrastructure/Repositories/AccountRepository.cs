@@ -34,6 +34,7 @@ public class AccountRepository : IAccountRepository
     public async Task AddAsync(Account account, CancellationToken ct)
     {
         await _context.Accounts.AddAsync(account, ct);
+        await _context.SaveChangesAsync(ct);
     }
 
     public async Task SaveChangesAsync(CancellationToken ct)

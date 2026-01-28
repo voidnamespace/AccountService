@@ -1,6 +1,31 @@
-﻿namespace AccountService.API.Controllers
+﻿using AccountService.Application.Commands.CreateAccount;
+using AccountService.Application.DTOs;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+namespace AccountService.API.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public class AccountController : ControllerBase
 {
-    public class AccountController
+
+    private readonly IMediator _mediator;
+
+    public AccountController (IMediator mediator)
     {
+        _mediator = mediator; 
     }
+
+    [HttpPost("accounts")]
+    public async Task<IActionResult> CreateAccount(
+    CreateAccountRequest request,
+    CancellationToken ct)
+    {
+        await _mediator.Send(new CreateAccountCommand(request), ct);
+        return Accepted();
+    }
+
+
+
+
 }

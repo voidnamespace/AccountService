@@ -23,11 +23,5 @@ public class CreateAccountHandler : IRequestHandler<CreateAccountCommand>
         var account = new Account(command.request.UserId);
         await _accountRepository.AddAsync(account, ct);
 
-
-
-
-
-
-
     }
 }
