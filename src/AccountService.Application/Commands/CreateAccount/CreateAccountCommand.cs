@@ -2,5 +2,5 @@
 using MediatR;
 namespace AccountService.Application.Commands.CreateAccount;
 
-public record CreateAccountCommand (CreateAccountRequest request) : IRequest<CreateAccountResponse>;
+public record CreateAccountCommand (CreateAccountRequest request) : IRequest;
 

@@ -24,6 +24,16 @@ public sealed class AccountNumberVO
 
         _value = accountNumber;
     }
+    public static AccountNumberVO Generate()
+    {
+        var value = string.Concat(
+            Enumerable.Range(0, 12)
+                .Select(_ => Random.Shared.Next(0, 10))
+        );
+
+        return new AccountNumberVO(value);
+    }
+
 
     public override string ToString() => _value;
 }
