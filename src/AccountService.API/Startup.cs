@@ -21,7 +21,7 @@ public class Startup
         services.AddControllers(); // регистрирует контроллеры
         services.AddEndpointsApiExplorer();
         services.AddSwaggerConfiguration();
-        services.AddDatabaseConfiguration(Configuration);
+
     }
 
 
@@ -29,6 +29,8 @@ public class Startup
     {
         app.MapControllers(); // маршрутизирует
         app.UseHttpsRedirection();
+        app.UseSwaggerConfiguration();
+
 
     }
 
