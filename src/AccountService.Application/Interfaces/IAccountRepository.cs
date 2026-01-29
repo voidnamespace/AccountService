@@ -11,7 +11,7 @@ public interface IAccountRepository
 
     Task AddAsync(Account account, CancellationToken ct);
 
-    Task<IEnumerable<Account?>> GetAllAsync(CancellationToken ct);
+    Task<IReadOnlyList<Account>> GetAllAsync(CancellationToken ct);
 
     Task SaveChangesAsync(CancellationToken ct);
 }

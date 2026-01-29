@@ -22,6 +22,7 @@ public class GetAllAccountsHandler
     {
         var accounts = await _accountRepository.GetAllAsync(ct);
 
+
         return accounts.Select(account => new ReadAccountDTO
         {
             Id = account.Id,
@@ -31,7 +32,7 @@ public class GetAllAccountsHandler
             CreatedAt = account.CreatedAt,
             UpdatedAt = account.UpdatedAt,
             IsActive = account.IsActive
-        });
+        }).ToList();
     }
 
 

@@ -37,7 +37,7 @@ public class AccountRepository : IAccountRepository
         await _context.SaveChangesAsync(ct);
     }
 
-    public async Task<IReadOnlyList<Account>> GetAllAsync(CancellationToken ct)
+    public async Task<IReadOnlyList<Account>> GetAllAsync (CancellationToken ct)
     {
         return await _context.Accounts
             .AsNoTracking()
