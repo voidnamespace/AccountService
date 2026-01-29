@@ -11,9 +11,12 @@ public static class DatabaseExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        var cs = configuration.GetConnectionString("AccountDb")
+            ?? throw new InvalidOperationException(
+                "Connection string 'AccountDb' not found");
+
         services.AddDbContext<AccountDbContext>(options =>
-            options.UseNpgsql(
-                configuration.GetConnectionString("AccountDb")));
+            options.UseNpgsql(cs));
 
         return services;
     }
