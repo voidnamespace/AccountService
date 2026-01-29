@@ -5,7 +5,7 @@ using MediatR;
 namespace AccountService.Application.Queries.GetAllAccounts;
 
 public class GetAllAccountsHandler 
-    : IRequestHandler<GetAllAccountsQuery, IEnumerable<ReadAccountDTO>>
+    : IRequestHandler<GetAllAccountsQuery, IReadOnlyList<ReadAccountDTO>>
 {
     private readonly IAccountRepository _accountRepository;
 
@@ -16,7 +16,7 @@ public class GetAllAccountsHandler
 
 
 
-    public async Task<IEnumerable<ReadAccountDTO>> Handle(
+    public async Task<IReadOnlyList<ReadAccountDTO>> Handle(
     GetAllAccountsQuery query,
     CancellationToken ct)
     {

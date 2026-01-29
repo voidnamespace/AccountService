@@ -1,6 +1,4 @@
-﻿
-using AccountService.Application.DTOs;
-using AccountService.Application.Interfaces;
+﻿using AccountService.Application.Interfaces;
 using AccountService.Domain.Entity;
 using MediatR;
 
