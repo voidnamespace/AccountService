@@ -1,5 +1,6 @@
 ﻿using AccountService.Application.Commands.CreateAccount;
 using AccountService.Application.DTOs;
+using AccountService.Application.Queries.GetAllAccounts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 namespace AccountService.API.Controllers;
@@ -25,6 +26,12 @@ public class AccountController : ControllerBase
         return Accepted();
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetAll(CancellationToken ct)
+    {
+        var result = await _mediator.Send(new GetAllAccountsQuery(), ct);
+        return Ok(result);
+    }
 
 
 
