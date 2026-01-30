@@ -15,11 +15,11 @@ public class Account
     public bool IsActive { get; private set; }
 
     private Account() { }
-    public Account (Guid userId)
+    public Account (Guid userId, AccountNumberVO accountNumberVO)
     {
         Id = Guid.NewGuid();
         UserId = userId;
-        AccountNumber = AccountNumberVO.Generate();
+        AccountNumber = accountNumberVO;
         Balance = 0;
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;

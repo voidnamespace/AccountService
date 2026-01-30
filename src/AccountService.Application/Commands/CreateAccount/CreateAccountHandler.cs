@@ -1,5 +1,6 @@
 ﻿using AccountService.Application.Interfaces;
 using AccountService.Domain.Entity;
+using AccountService.Domain.ValueObjects;
 using MediatR;
 
 namespace AccountService.Application.Commands.CreateAccount;
@@ -15,10 +16,16 @@ public class CreateAccountHandler : IRequestHandler<CreateAccountCommand>
     }
 
 
-
     public async Task Handle(CreateAccountCommand command, CancellationToken ct)
     {
-        var account = new Account(command.request.UserId);
+        AccountNumberVO accountNumberVO;
+        do
+        {
+            accountNumberVO = AccountNumberVO.Generate();
+        }
+        while (await _accountRepository
+            .ExistsByAccountNumberAsync(accountNumberVO, ct));
+        var account = new Account(command.request.UserId, accountNumberVO);
         await _accountRepository.AddAsync(account, ct);
 
     }
