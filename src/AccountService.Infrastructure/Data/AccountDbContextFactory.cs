@@ -1,27 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AccountService.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Configuration;
-
-
-namespace AccountService.Infrastructure.Data;
 
 public class AccountDbContextFactory
     : IDesignTimeDbContextFactory<AccountDbContext>
 {
     public AccountDbContext CreateDbContext(string[] args)
     {
-        var configuration = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: true)
-            .AddJsonFile("appsettings.Development.json", optional: true)
-            .AddEnvironmentVariables()
-            .Build();
-
-        var connectionString =
-            configuration.GetConnectionString("AccountDb");
-
         var options = new DbContextOptionsBuilder<AccountDbContext>()
-            .UseNpgsql(connectionString)
+            .UseNpgsql(
+                "Host=localhost;Port=5432;Database=accountdb;Username=postgres;Password=postgres"
+            )
             .Options;
 
         return new AccountDbContext(options);
