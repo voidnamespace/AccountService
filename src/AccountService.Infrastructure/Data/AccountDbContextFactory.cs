@@ -18,7 +18,7 @@ public class AccountDbContextFactory
             .Build();
 
         var connectionString =
-            configuration.GetConnectionString("accountdb");
+            configuration.GetConnectionString("AccountDb");
 
         var options = new DbContextOptionsBuilder<AccountDbContext>()
             .UseNpgsql(connectionString)
