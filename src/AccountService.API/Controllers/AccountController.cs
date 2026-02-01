@@ -1,6 +1,11 @@
 ﻿using AccountService.Application.Commands.CreateAccount;
+using AccountService.Application.Commands.DeleteAccount;
 using AccountService.Application.DTOs;
+using AccountService.Application.Queries.GetAllAccounts;
+using AccountService.Application.Queries.GetByAccountNumberAccount;
+using AccountService.Application.Queries.GetByIdAccount;
 using MediatR;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 namespace AccountService.API.Controllers;
 
@@ -16,7 +21,7 @@ public class AccountController : ControllerBase
         _mediator = mediator; 
     }
 
-    [HttpPost("accounts")]
+    [HttpPost]
     public async Task<IActionResult> CreateAccount(
     CreateAccountRequest request,
     CancellationToken ct)
@@ -25,6 +30,36 @@ public class AccountController : ControllerBase
         return Accepted();
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetAll(CancellationToken ct)
+    {
+        var result = await _mediator.Send(new GetAllAccountsQuery(), ct);
+        return Ok(result);
+    }
+
+
+    [HttpGet("{accountId:guid}")]
+    public async Task<IActionResult> GetById(Guid accountId, CancellationToken ct)
+    {
+        var result = await _mediator.Send(new GetByIdAccountQuery(accountId), ct);
+        return Ok(result);
+    }
+
+
+
+    [HttpGet("by-number/{AccountId:guid}")]
+    public async Task<IActionResult> GetByAccountNumber(Guid AccountId,  CancellationToken ct)
+    {
+        var result = await _mediator.Send(new GetByAccountNumberAccountQuery(AccountId), ct);
+        return Ok(result);
+    }
+
+    [HttpDelete("{accountId:guid}")]
+    public async Task <IActionResult> DeleteAccount(Guid accountId, CancellationToken ct)
+    {
+        await _mediator.Send(new DeleteAccountCommand(accountId));
+        return NoContent();
+    }
 
 
 

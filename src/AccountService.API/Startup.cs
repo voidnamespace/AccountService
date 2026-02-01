@@ -1,4 +1,5 @@
 ﻿using AccountService.API.Extensions;
+using AccountService.Application;
 using AccountService.Application.Commands.CreateAccount;
 using AccountService.Infrastructure.Extensions;
 namespace AccountService.API;
@@ -16,9 +17,9 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddMediatR(cfg =>
-    cfg.RegisterServicesFromAssembly(typeof(CreateAccountCommand).Assembly));
+    cfg.RegisterServicesFromAssembly(typeof(ApplicationAssemblyMarker).Assembly));
         services.AddInfrastructure(Configuration);
-        services.AddControllers(); // регистрирует контроллеры
+        services.AddControllers();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerConfiguration();
 
@@ -27,7 +28,7 @@ public class Startup
 
     public void Configure(WebApplication app, IWebHostEnvironment env)
     {
-        app.MapControllers(); // маршрутизирует
+        app.MapControllers();
         app.UseHttpsRedirection();
         app.UseSwaggerConfiguration();
 
