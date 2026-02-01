@@ -1,4 +1,5 @@
 ﻿using AccountService.Application.Commands.CreateAccount;
+using AccountService.Application.Commands.DeleteAccount;
 using AccountService.Application.DTOs;
 using AccountService.Application.Queries.GetAllAccounts;
 using AccountService.Application.Queries.GetByAccountNumberAccount;
@@ -38,21 +39,27 @@ public class AccountController : ControllerBase
 
 
     [HttpGet("{accountId:guid}")]
-    public async Task<IActionResult> GetById(Guid UserId, CancellationToken ct)
+    public async Task<IActionResult> GetById(Guid accountId, CancellationToken ct)
     {
-        var result = await _mediator.Send(new GetByIdAccountQuery(UserId), ct);
+        var result = await _mediator.Send(new GetByIdAccountQuery(accountId), ct);
         return Ok(result);
     }
 
 
-    [HttpGet("by-number/{accountNumber}")]
+
+    [HttpGet("by-number/{AccountId:guid}")]
     public async Task<IActionResult> GetByAccountNumber(Guid AccountId,  CancellationToken ct)
     {
         var result = await _mediator.Send(new GetByAccountNumberAccountQuery(AccountId), ct);
         return Ok(result);
     }
 
-
+    [HttpDelete("{accountId:guid}")]
+    public async Task <IActionResult> DeleteAccount(Guid accountId, CancellationToken ct)
+    {
+        await _mediator.Send(new DeleteAccountCommand(accountId));
+        return NoContent();
+    }
 
 
 
