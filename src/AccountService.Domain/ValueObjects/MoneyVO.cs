@@ -1,10 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using AccountService.Domain.Enums;
+namespace AccountService.Domain.ValueObjects;
 
-namespace AccountService.Domain.ValueObjects
+public sealed class MoneyVO : IEquatable<MoneyVO>
 {
-    internal class MoneyVO
+    public decimal Amount { get; }
+    public Currency Currency { get; } 
+
+    private MoneyVO() { }
+    public MoneyVO(decimal amount, Currency currency)
     {
+        Amount = amount;
+        Currency = currency;
     }
+
+    public bool Equals(MoneyVO? other)
+    {
+        if (other is null) return false;
+        return Amount == other.Amount && Currency == other.Currency;
+    }
+
+    public override bool Equals(object? obj)
+        => Equals(obj as MoneyVO);
+
+    public override int GetHashCode()
+        => HashCode.Combine(Amount, Currency);
+
+    public override string ToString()
+        => $"{Amount} {Currency}";
 }

@@ -1,6 +1,4 @@
-﻿
-
-namespace AccountService.Domain.Enums;
+﻿namespace AccountService.Domain.Enums;
 
 public enum Currency
 {

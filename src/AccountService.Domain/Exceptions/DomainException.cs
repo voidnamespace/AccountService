@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace AccountService.Domain.Exceptions;
 
-namespace AccountService.Domain.Exceptions
+public class DomainException : Exception
 {
-    internal class DomainException
+    public DomainException(string message) : base(message)
     {
     }
 }
