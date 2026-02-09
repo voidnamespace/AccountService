@@ -34,8 +34,25 @@ public class Startup
         using (var scope = app.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<AccountDbContext>();
-            db.Database.Migrate();
+
+            var retries = 10;
+            while (retries > 0)
+            {
+                try
+                {
+                    db.Database.Migrate();
+                    Console.WriteLine("MIGRATIONS APPLIED");
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("WAITING FOR DB... " + ex.Message);
+                    Thread.Sleep(3000);
+                    retries--;
+                }
+            }
         }
+
 
     }
 
