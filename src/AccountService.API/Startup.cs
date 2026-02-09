@@ -1,7 +1,7 @@
 ﻿using AccountService.API.Extensions;
 using AccountService.Application;
-using AccountService.Application.Commands.CreateAccount;
-using AccountService.Infrastructure.Extensions;
+using AccountService.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 namespace AccountService.API;
 
 public class Startup
@@ -31,7 +31,11 @@ public class Startup
         app.MapControllers();
         app.UseHttpsRedirection();
         app.UseSwaggerConfiguration();
-
+        using (var scope = app.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AccountDbContext>();
+            db.Database.Migrate();
+        }
 
     }
 
