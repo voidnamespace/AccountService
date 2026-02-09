@@ -16,7 +16,9 @@ public static class DatabaseExtensions
                 "Connection string 'AccountDb' not found");
 
         services.AddDbContext<AccountDbContext>(options =>
-            options.UseNpgsql(cs));
+    options.UseNpgsql(cs, b =>
+        b.MigrationsAssembly(typeof(AccountDbContext).Assembly.FullName)));
+
 
         return services;
     }
