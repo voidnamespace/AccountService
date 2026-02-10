@@ -38,9 +38,9 @@ public class AccountController : ControllerBase
 
 
     [HttpGet("{accountId:guid}")]
-    public async Task<IActionResult> GetById(Guid UserId, CancellationToken ct)
+    public async Task<IActionResult> GetById(Guid accountId, CancellationToken ct)
     {
-        var result = await _mediator.Send(new GetByIdAccountQuery(UserId), ct);
+        var result = await _mediator.Send(new GetByIdAccountQuery(accountId), ct);
         return Ok(result);
     }
 

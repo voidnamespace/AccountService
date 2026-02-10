@@ -9,11 +9,13 @@ namespace AccountService.Application.Commands.CreateAccount;
 public class CreateAccountHandler : IRequestHandler<CreateAccountCommand, ReadAccountDTO>
 {
     private readonly IAccountRepository _accountRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
 
-    public CreateAccountHandler(IAccountRepository accountRepository)
+    public CreateAccountHandler(IAccountRepository accountRepository, IUnitOfWork unitOfWork)
     {
         _accountRepository = accountRepository;
+        _unitOfWork = unitOfWork;
     }
 
 
@@ -28,6 +30,7 @@ public class CreateAccountHandler : IRequestHandler<CreateAccountCommand, ReadAc
             .ExistsByAccountNumberAsync(accountNumberVO, ct));
         var acc = new Account(command.request.UserId, accountNumberVO);
         await _accountRepository.AddAsync(acc, ct);
+        await _unitOfWork.SaveChangesAsync(ct);
         return new ReadAccountDTO
         {
             Id = acc.Id,
