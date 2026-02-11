@@ -1,4 +1,4 @@
-﻿namespace TransactionService.Domain.Exceptions;
+﻿namespace AccountService.Domain.Exceptions;
 
 public class DomainException : Exception
 {

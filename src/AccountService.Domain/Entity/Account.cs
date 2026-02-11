@@ -1,5 +1,5 @@
 ﻿using AccountService.Domain.ValueObjects;
-using TransactionService.Domain.Exceptions;
+using AccountService.Domain.Exceptions;
 namespace AccountService.Domain.Entity;
 
 public class Account
