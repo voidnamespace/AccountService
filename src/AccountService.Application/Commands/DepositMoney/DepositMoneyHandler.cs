@@ -1,6 +1,7 @@
 ﻿using AccountService.Application.Interfaces;
 using AccountService.Domain.ValueObjects;
 using MediatR;
+using System.Reflection.Metadata.Ecma335;
 namespace AccountService.Application.Commands.DepositMoney;
 
 public class DepositMoneyHandler : IRequestHandler<DepositMoneyCommand>
@@ -20,8 +21,8 @@ public class DepositMoneyHandler : IRequestHandler<DepositMoneyCommand>
 
         var acc = await _accountRepository.GetByAccountNumberAsync(accNum, ct)
             ?? throw new KeyNotFoundException("No such acc");
-
-        acc.Deposit(command.request.Amount);
+        var money = new MoneyVO(command.request.Amount, command.request.Currency);
+        acc.Deposit(money);
         await _unitOfWork.SaveChangesAsync(ct);
 
     }
