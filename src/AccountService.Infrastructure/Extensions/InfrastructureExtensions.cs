@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+
 public static class InfrastructureExtensions
 {
     public static IServiceCollection AddInfrastructure(

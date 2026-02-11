@@ -3,7 +3,6 @@
 public class ReadAccountDTO
 {
     public Guid Id { get; init; }
-
     public Guid UserId { get; init; }
     public string AccountNumber { get; init; } = default!;
     public decimal Balance { get; init; }

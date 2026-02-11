@@ -1,8 +1,6 @@
 ﻿using AccountService.Application.Interfaces;
 using AccountService.Domain.ValueObjects;
 using MediatR;
-
-
 namespace AccountService.Application.Commands.WithdrawMoney;
 
 public class WithdrawMoneyHandler : IRequestHandler<WithdrawMoneyCommand>
@@ -17,22 +15,15 @@ public class WithdrawMoneyHandler : IRequestHandler<WithdrawMoneyCommand>
     }
 
     public async Task Handle (WithdrawMoneyCommand command, CancellationToken ct)
-    {
-        
+    {  
         var accNum = new AccountNumberVO(command.request.AccountNumber);
 
         var acc = await _accountRepository.GetByAccountNumberAsync(accNum, ct)
             ?? throw new KeyNotFoundException("No such acc");
 
             acc.Withdraw(command.request.Amount);
-
             await _unitOfWork.SaveChangesAsync(ct);
 
     }
-
-
-
-
-
 
 }

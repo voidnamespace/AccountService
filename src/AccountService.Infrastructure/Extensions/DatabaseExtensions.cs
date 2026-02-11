@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using AccountService.Infrastructure.Data;
-
 namespace AccountService.Infrastructure.Extensions;
 
 public static class DatabaseExtensions

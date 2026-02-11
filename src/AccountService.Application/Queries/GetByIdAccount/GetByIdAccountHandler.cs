@@ -1,7 +1,6 @@
 ﻿using AccountService.Application.DTOs;
 using AccountService.Application.Interfaces;
 using MediatR;
-
 namespace AccountService.Application.Queries.GetByIdAccount;
 
 public class GetByIdAccountHandler 
@@ -35,8 +34,5 @@ public class GetByIdAccountHandler
             IsActive = acc.IsActive
         };
     }
-
-
-
 
 }

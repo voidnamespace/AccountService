@@ -46,13 +46,17 @@ public class AccountController : ControllerBase
     }
 
 
-
-    [HttpGet("by-number/{AccountId:guid}")]
-    public async Task<IActionResult> GetByAccountNumber(Guid AccountId,  CancellationToken ct)
+    [HttpGet("by-number/{accountNumber}")]
+    public async Task<IActionResult> GetByAccountNumber(string accountNumber, CancellationToken ct)
     {
-        var result = await _mediator.Send(new GetByAccountNumberAccountQuery(AccountId), ct);
+        var result = await _mediator.Send(
+            new GetByAccountNumberAccountQuery(accountNumber),
+            ct
+        );
+
         return Ok(result);
     }
+
 
     [HttpDelete("{accountId:guid}")]
     public async Task <IActionResult> DeleteAccount(Guid accountId, CancellationToken ct)

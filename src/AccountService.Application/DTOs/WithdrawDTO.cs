@@ -1,6 +1,4 @@
-﻿
-
-namespace AccountService.Application.DTOs;
+﻿namespace AccountService.Application.DTOs;
 
 public class WithdrawRequest
 {
