@@ -34,7 +34,6 @@ public class AccountRepository : IAccountRepository
     public async Task AddAsync(Account account, CancellationToken ct)
     {
         await _context.Accounts.AddAsync(account, ct);
-        await _context.SaveChangesAsync(ct);
     }
 
     public async Task<IReadOnlyList<Account>> GetAllAsync (CancellationToken ct)
@@ -44,6 +43,8 @@ public class AccountRepository : IAccountRepository
             .ToListAsync(ct);
     }
 
+<<<<<<< HEAD
+=======
     public async Task DeleteAsync (Guid accId, CancellationToken ct)
     {
         var acc = await _context.Accounts.FindAsync(accId);
@@ -60,4 +61,5 @@ public class AccountRepository : IAccountRepository
         await _context.SaveChangesAsync(ct);
     }
 
+>>>>>>> main
 }

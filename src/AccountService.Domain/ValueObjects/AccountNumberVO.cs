@@ -1,4 +1,6 @@
-﻿namespace AccountService.Domain.ValueObjects;
+﻿using TransactionService.Domain.Exceptions;
+
+namespace AccountService.Domain.ValueObjects;
 
 public sealed class AccountNumberVO
 {
@@ -14,13 +16,13 @@ public sealed class AccountNumberVO
     public AccountNumberVO(string accountNumber)
     {
         if (string.IsNullOrWhiteSpace(accountNumber))
-            throw new ArgumentException("Account number is required", nameof(accountNumber));
+            throw new DomainException("Account number is required");
 
         if (accountNumber.Length != 12)
-            throw new ArgumentException("Account number must be exactly 12 digits", nameof(accountNumber));
+            throw new DomainException("Account number must be exactly 12 digits");
 
         if (!accountNumber.All(char.IsDigit))
-            throw new ArgumentException("Account number must contain only digits", nameof(accountNumber));
+            throw new DomainException("Account number must contain only digits");
 
         _value = accountNumber;
     }
