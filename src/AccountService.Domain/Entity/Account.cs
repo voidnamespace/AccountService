@@ -1,5 +1,6 @@
 ﻿using AccountService.Domain.ValueObjects;
 using AccountService.Domain.Exceptions;
+using AccountService.Domain.Enums;
 namespace AccountService.Domain.Entity;
 
 public class Account
@@ -8,7 +9,7 @@ public class Account
 
     public Guid UserId { get; private set; }
     public AccountNumberVO AccountNumber { get; private set; } = default!;
-    public decimal Balance { get; private set; }
+    public MoneyVO Balance { get; private set; } = default!;
     public DateTime CreatedAt { get; private set; }
 
     public DateTime UpdatedAt { get; private set; }
@@ -16,12 +17,12 @@ public class Account
     public bool IsActive { get; private set; }
 
     private Account() { }
-    public Account (Guid userId, AccountNumberVO accountNumberVO)
+    public Account (Guid userId, AccountNumberVO accountNumberVO, Currency currency)
     {
         Id = Guid.NewGuid();
         UserId = userId;
         AccountNumber = accountNumberVO;
-        Balance = 0;
+        Balance = new MoneyVO(0, currency); 
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
         IsActive = true;
@@ -39,24 +40,43 @@ public class Account
         UpdatedAt = DateTime.UtcNow;
     }
 
-    public void Withdraw (decimal amount)
+    public void Withdraw(MoneyVO moneyVO)
     {
         if (!IsActive)
             throw new DomainException("Account is inactive");
-        if (amount <= 0)
+
+        if (moneyVO.Currency != Balance.Currency)
+            throw new DomainException("Currency mismatch");
+
+        if (moneyVO.Amount <= 0)
             throw new DomainException("Amount must be greater than zero");
-        if (amount > Balance)
-            throw new DomainException($"insufficient balance");
-        Balance -= amount;
+
+        if (moneyVO.Amount > Balance.Amount)
+            throw new DomainException("Insufficient balance");
+
+        Balance = new MoneyVO(
+            Balance.Amount - moneyVO.Amount,
+            Balance.Currency
+        );
+
         UpdatedAt = DateTime.UtcNow;
     }
-    public void Deposit (decimal amount)
+
+    public void Deposit(MoneyVO moneyVO)
     {
         if (!IsActive)
             throw new DomainException("Account is inactive");
-        if (amount <= 0)
+
+        if (moneyVO.Currency != Balance.Currency)
+            throw new DomainException("Currency mismatch");
+
+        if (moneyVO.Amount <= 0)
             throw new DomainException("Amount must be greater than zero");
-        Balance += amount;
+
+        Balance = new MoneyVO(
+            Balance.Amount + moneyVO.Amount, Balance.Currency
+            );
         UpdatedAt = DateTime.UtcNow;
     }
+
 }

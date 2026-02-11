@@ -1,26 +1,21 @@
 ﻿using AccountService.Domain.Exceptions;
-
+using AccountService.Domain.Enums;
 namespace AccountService.Domain.ValueObjects;
 
 public sealed class MoneyVO : IEquatable<MoneyVO>
 {
     public decimal Amount { get; }
-    public string Currency { get; } = string.Empty;
+    public Currency Currency { get; } 
 
     private MoneyVO() { }
-    public MoneyVO(decimal amount, string currency)
+    public MoneyVO(decimal amount, Currency currency)
     {
         if (amount < 0)
             throw new DomainException("Amount cannot be negative");
 
-        if (string.IsNullOrWhiteSpace(currency))
-            throw new DomainException("Currency is required");
-
-        if (currency.Length != 3)
-            throw new DomainException("Currency must be ISO 4217 code (e.g. USD)");
 
         Amount = amount;
-        Currency = currency.ToUpperInvariant();
+        Currency = currency;
     }
 
     public bool Equals(MoneyVO? other)
