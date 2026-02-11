@@ -1,8 +1,6 @@
-﻿
+﻿namespace AccountService.Application.DTOs;
 
-namespace AccountService.Application.DTOs;
-
-public class WithdrawRequest
+public class DepositRequest
 {
     public string AccountNumber { get; init; } = string.Empty;
     public decimal Amount { get; init; }

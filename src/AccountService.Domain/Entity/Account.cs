@@ -1,4 +1,5 @@
 ﻿using AccountService.Domain.ValueObjects;
+using TransactionService.Domain.Exceptions;
 namespace AccountService.Domain.Entity;
 
 public class Account
@@ -41,20 +42,20 @@ public class Account
     public void Withdraw (decimal amount)
     {
         if (!IsActive)
-            throw new InvalidOperationException("Account is inactive");
+            throw new DomainException("Account is inactive");
         if (amount <= 0)
-            throw new ArgumentException("Amount must be greater than zero");
+            throw new DomainException("Amount must be greater than zero");
         if (amount > Balance)
-            throw new InvalidOperationException($"insufficient balance");
+            throw new DomainException($"insufficient balance");
         Balance -= amount;
         UpdatedAt = DateTime.UtcNow;
     }
     public void Deposit (decimal amount)
     {
         if (!IsActive)
-            throw new InvalidOperationException("Account is inactive");
+            throw new DomainException("Account is inactive");
         if (amount <= 0)
-            throw new ArgumentException("Amount must be greater than zero");
+            throw new DomainException("Amount must be greater than zero");
         Balance += amount;
         UpdatedAt = DateTime.UtcNow;
     }

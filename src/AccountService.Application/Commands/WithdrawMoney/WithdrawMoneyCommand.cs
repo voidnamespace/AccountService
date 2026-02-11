@@ -3,4 +3,4 @@ using MediatR;
 
 namespace AccountService.Application.Commands.WithdrawMoney;
 
-public record WithdrawMoneyCommand (WithdrawDTO request) : IRequest;
+public record WithdrawMoneyCommand (WithdrawRequest request) : IRequest;
