@@ -6,11 +6,13 @@ namespace AccountService.Application.Commands.DeleteAccount;
 public class DeleteAccountHandler : IRequestHandler<DeleteAccountCommand>
 {
     private readonly IAccountRepository _accountRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
 
-    public DeleteAccountHandler (IAccountRepository accountRepository)
+    public DeleteAccountHandler (IAccountRepository accountRepository, IUnitOfWork unitOfWork)
     {
         _accountRepository = accountRepository; 
+        _unitOfWork = unitOfWork;
     }
 
 
@@ -22,6 +24,8 @@ public class DeleteAccountHandler : IRequestHandler<DeleteAccountCommand>
             throw new KeyNotFoundException($"Account with ID {command.accId} not found");
         
         await _accountRepository.DeleteAsync(command.accId, ct);
+        await _unitOfWork.SaveChangesAsync(ct);
+
     }
 
 

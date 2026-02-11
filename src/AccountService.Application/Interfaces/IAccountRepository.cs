@@ -15,5 +15,4 @@ public interface IAccountRepository
 
     Task DeleteAsync(Guid accId, CancellationToken ct);
 
-    Task SaveChangesAsync(CancellationToken ct);
 }
