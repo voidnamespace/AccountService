@@ -43,4 +43,23 @@ public class AccountRepository : IAccountRepository
             .ToListAsync(ct);
     }
 
+<<<<<<< HEAD
+=======
+    public async Task DeleteAsync (Guid accId, CancellationToken ct)
+    {
+        var acc = await _context.Accounts.FindAsync(accId);
+        if (acc != null)
+        {
+            _context.Accounts.Remove(acc);
+            await _context.SaveChangesAsync(ct);
+        }
+    }
+
+
+    public async Task SaveChangesAsync(CancellationToken ct)
+    {
+        await _context.SaveChangesAsync(ct);
+    }
+
+>>>>>>> main
 }
