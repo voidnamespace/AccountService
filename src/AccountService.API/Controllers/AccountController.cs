@@ -60,7 +60,7 @@ public class AccountController : ControllerBase
     public async Task <IActionResult> Deposit(string accountNumber,
     [FromBody] DepositRequest request, CancellationToken ct)
     {
-        await _mediator.Send(new DepositMoneyCommand(request), ct);
+        await _mediator.Send(new DepositMoneyCommand(request, accountNumber),ct);
         return Ok();
     }
 
@@ -68,7 +68,7 @@ public class AccountController : ControllerBase
     public async Task <IActionResult> Withdraw (string accountNumber,
     [FromBody] WithdrawRequest request, CancellationToken ct)
     {
-        await _mediator.Send(new WithdrawMoneyCommand(request), ct);
+        await _mediator.Send(new WithdrawMoneyCommand(request, accountNumber), ct);
         return Ok();
     }
 
