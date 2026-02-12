@@ -2,5 +2,5 @@
 using MediatR;
 namespace AccountService.Application.Commands.DepositMoney;
 
-public record DepositMoneyCommand (DepositRequest request) : IRequest;
+public record DepositMoneyCommand (DepositRequest request, string AccountNumber) : IRequest;
 

@@ -16,7 +16,7 @@ public class WithdrawMoneyHandler : IRequestHandler<WithdrawMoneyCommand>
 
     public async Task Handle (WithdrawMoneyCommand command, CancellationToken ct)
     {  
-        var accNum = new AccountNumberVO(command.request.AccountNumber);
+        var accNum = new AccountNumberVO(command.AccountNumber);
 
         var acc = await _accountRepository.GetByAccountNumberAsync(accNum, ct)
             ?? throw new KeyNotFoundException("No such acc");

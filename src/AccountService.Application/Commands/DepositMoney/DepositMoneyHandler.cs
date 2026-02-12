@@ -1,6 +1,7 @@
 ﻿using AccountService.Application.Interfaces;
 using AccountService.Domain.ValueObjects;
 using MediatR;
+
 namespace AccountService.Application.Commands.DepositMoney;
 
 public class DepositMoneyHandler : IRequestHandler<DepositMoneyCommand>
@@ -16,7 +17,7 @@ public class DepositMoneyHandler : IRequestHandler<DepositMoneyCommand>
 
     public async Task Handle (DepositMoneyCommand command, CancellationToken ct)
     {
-        var accNum = new AccountNumberVO(command.request.AccountNumber);
+        var accNum = new AccountNumberVO(command.AccountNumber);
 
         var acc = await _accountRepository.GetByAccountNumberAsync(accNum, ct)
             ?? throw new KeyNotFoundException("No such acc");
