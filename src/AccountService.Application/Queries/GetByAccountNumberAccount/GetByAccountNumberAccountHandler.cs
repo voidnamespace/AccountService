@@ -2,7 +2,7 @@
 using AccountService.Application.Interfaces;
 using AccountService.Domain.ValueObjects;
 using MediatR;
-using TransactionService.Domain.Exceptions;
+using AccountService.Domain.Exceptions;
 namespace AccountService.Application.Queries.GetByAccountNumberAccount;
 
 public class GetByAccountNumberAccountHandler : IRequestHandler<GetByAccountNumberAccountQuery, ReadAccountDTO>
@@ -30,7 +30,8 @@ public class GetByAccountNumberAccountHandler : IRequestHandler<GetByAccountNumb
             Id = acc.Id,
             UserId = acc.UserId,
             AccountNumber = acc.AccountNumber.Value,
-            Balance = acc.Balance,
+            BalanceAmount = acc.Balance.Amount,
+            BalanceCurrency = acc.Balance.Currency,
             CreatedAt = acc.CreatedAt,
             UpdatedAt = acc.UpdatedAt,
             IsActive = acc.IsActive

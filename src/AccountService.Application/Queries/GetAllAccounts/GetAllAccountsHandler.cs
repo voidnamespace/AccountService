@@ -24,7 +24,8 @@ public class GetAllAccountsHandler
             Id = account.Id,
             UserId = account.UserId,
             AccountNumber = account.AccountNumber.Value,
-            Balance = account.Balance,
+            BalanceAmount = account.Balance.Amount,
+            BalanceCurrency = account.Balance.Currency,
             CreatedAt = account.CreatedAt,
             UpdatedAt = account.UpdatedAt,
             IsActive = account.IsActive
