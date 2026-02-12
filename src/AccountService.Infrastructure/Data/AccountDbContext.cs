@@ -10,10 +10,7 @@ public class AccountDbContext : DbContext
     : base(options)
     {
     }
-
-
     public DbSet<Account> Accounts { get; set; }
-
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -25,7 +22,6 @@ public class AccountDbContext : DbContext
 
         modelBuilder.Entity<Account>(entity =>
         {
-
             entity.HasKey(u => u.Id);
 
             entity.Property(u => u.UserId)
@@ -38,8 +34,16 @@ public class AccountDbContext : DbContext
             .IsRequired()
             .HasMaxLength(12);
 
-            entity.Property(u => u.Balance)
-            .HasDefaultValue(0);
+            entity.OwnsOne(a => a.Balance, balance =>
+            {
+                balance.Property(b => b.Amount)
+                    .HasColumnName("BalanceAmount")
+                    .IsRequired();
+
+                balance.Property(b => b.Currency)
+                    .HasColumnName("BalanceCurrency")
+                    .IsRequired();
+            });
 
             entity.Property(u => u.CreatedAt)
             .IsRequired();
@@ -50,10 +54,9 @@ public class AccountDbContext : DbContext
             entity.Property(u => u.IsActive)
             .HasDefaultValue(true);
 
+            entity.Property(a => a.RowVersion)
+            .IsRowVersion();
+
         });
-
-
     }
-
-
-    }
+}

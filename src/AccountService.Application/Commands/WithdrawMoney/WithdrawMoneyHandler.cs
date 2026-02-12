@@ -21,7 +21,9 @@ public class WithdrawMoneyHandler : IRequestHandler<WithdrawMoneyCommand>
         var acc = await _accountRepository.GetByAccountNumberAsync(accNum, ct)
             ?? throw new KeyNotFoundException("No such acc");
 
-            acc.Withdraw(command.request.Amount);
+        var money = new MoneyVO(command.request.Amount, command.request.Currency);
+
+            acc.Withdraw(money);
             await _unitOfWork.SaveChangesAsync(ct);
 
     }

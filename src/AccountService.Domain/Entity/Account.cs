@@ -15,6 +15,7 @@ public class Account
     public DateTime UpdatedAt { get; private set; }
 
     public bool IsActive { get; private set; }
+    public byte[] RowVersion { get; private set; } = default!;
 
     private Account() { }
     public Account (Guid userId, AccountNumberVO accountNumberVO, Currency currency)
