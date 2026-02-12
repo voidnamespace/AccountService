@@ -28,7 +28,7 @@ public class CreateAccountHandler : IRequestHandler<CreateAccountCommand, ReadAc
         }
         while (await _accountRepository
             .ExistsByAccountNumberAsync(accountNumberVO, ct));
-        var acc = new Account(command.request.UserId, accountNumberVO);
+        var acc = new Account(command.request.UserId, accountNumberVO, command.request.Currency);
         await _accountRepository.AddAsync(acc, ct);
         await _unitOfWork.SaveChangesAsync(ct);
         return new ReadAccountDTO
@@ -36,7 +36,8 @@ public class CreateAccountHandler : IRequestHandler<CreateAccountCommand, ReadAc
             Id = acc.Id,
             UserId = acc.UserId,
             AccountNumber = acc.AccountNumber.Value,
-            Balance = acc.Balance,
+            BalanceAmount = acc.Balance.Amount,
+            BalanceCurrency = acc.Balance.Currency,
             CreatedAt = acc.CreatedAt,
             UpdatedAt = acc.UpdatedAt,
             IsActive = acc.IsActive

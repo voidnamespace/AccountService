@@ -1,6 +1,7 @@
-﻿using AccountService.Infrastructure.Data;
-using AccountService.Application.Interfaces;
-
+﻿using AccountService.Application.Interfaces;
+using AccountService.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+using AccountService.Application.Exceptions;
 namespace AuthService.Infrastructure.Persistence;
 
 public class UnitOfWork : IUnitOfWork
@@ -12,8 +13,15 @@ public class UnitOfWork : IUnitOfWork
         _context = context;
     }
 
-    public async Task SaveChangesAsync(CancellationToken cancellationToken)
+    public async Task SaveChangesAsync(CancellationToken ct)
     {
-        await _context.SaveChangesAsync(cancellationToken);
+        try
+        {
+            await _context.SaveChangesAsync(ct);
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            throw new ConcurrencyException("Concurrent update detected");
+        }
     }
 }

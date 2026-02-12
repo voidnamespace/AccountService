@@ -1,7 +1,6 @@
 ﻿using AccountService.Application.DTOs;
 using AccountService.Application.Interfaces;
 using MediatR;
-
 namespace AccountService.Application.Queries.GetByIdAccount;
 
 public class GetByIdAccountHandler 
@@ -29,14 +28,12 @@ public class GetByIdAccountHandler
             Id = acc.Id,
             UserId = acc.UserId,
             AccountNumber = acc.AccountNumber.Value,
-            Balance = acc.Balance,
+            BalanceAmount = acc.Balance.Amount,
+            BalanceCurrency = acc.Balance.Currency,
             CreatedAt = acc.CreatedAt,
             UpdatedAt = acc.UpdatedAt,
             IsActive = acc.IsActive
         };
     }
-
-
-
 
 }

@@ -1,4 +1,4 @@
-﻿using TransactionService.Domain.Exceptions;
+﻿using AccountService.Domain.Exceptions;
 
 namespace AccountService.Domain.ValueObjects;
 

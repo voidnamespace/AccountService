@@ -1,11 +1,12 @@
 ﻿using AccountService.Application.Commands.CreateAccount;
 using AccountService.Application.Commands.DeleteAccount;
+using AccountService.Application.Commands.DepositMoney;
+using AccountService.Application.Commands.WithdrawMoney;
 using AccountService.Application.DTOs;
 using AccountService.Application.Queries.GetAllAccounts;
 using AccountService.Application.Queries.GetByAccountNumberAccount;
 using AccountService.Application.Queries.GetByIdAccount;
 using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 namespace AccountService.API.Controllers;
 
@@ -37,7 +38,6 @@ public class AccountController : ControllerBase
         return Ok(result);
     }
 
-
     [HttpGet("{accountId:guid}")]
     public async Task<IActionResult> GetById(Guid accountId, CancellationToken ct)
     {
@@ -45,13 +45,31 @@ public class AccountController : ControllerBase
         return Ok(result);
     }
 
-
-
-    [HttpGet("by-number/{AccountId:guid}")]
-    public async Task<IActionResult> GetByAccountNumber(Guid AccountId,  CancellationToken ct)
+    [HttpGet("by-number/{accountNumber}")]
+    public async Task<IActionResult> GetByAccountNumber(string accountNumber, CancellationToken ct)
     {
-        var result = await _mediator.Send(new GetByAccountNumberAccountQuery(AccountId), ct);
+        var result = await _mediator.Send(
+            new GetByAccountNumberAccountQuery(accountNumber),
+            ct
+        );
+
         return Ok(result);
+    }
+
+    [HttpPost("{accountNumber}/deposit")]
+    public async Task <IActionResult> Deposit(string accountNumber,
+    [FromBody] DepositRequest request, CancellationToken ct)
+    {
+        await _mediator.Send(new DepositMoneyCommand(request, accountNumber),ct);
+        return Ok();
+    }
+
+    [HttpPatch("{accountNumber}/withdraw")]
+    public async Task <IActionResult> Withdraw (string accountNumber,
+    [FromBody] WithdrawRequest request, CancellationToken ct)
+    {
+        await _mediator.Send(new WithdrawMoneyCommand(request, accountNumber), ct);
+        return Ok();
     }
 
     [HttpDelete("{accountId:guid}")]
@@ -60,7 +78,5 @@ public class AccountController : ControllerBase
         await _mediator.Send(new DeleteAccountCommand(accountId));
         return NoContent();
     }
-
-
 
 }

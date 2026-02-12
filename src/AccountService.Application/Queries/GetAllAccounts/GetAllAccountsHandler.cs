@@ -1,7 +1,6 @@
 ﻿using AccountService.Application.DTOs;
 using AccountService.Application.Interfaces;
 using MediatR;
-
 namespace AccountService.Application.Queries.GetAllAccounts;
 
 public class GetAllAccountsHandler 
@@ -13,9 +12,6 @@ public class GetAllAccountsHandler
     {
         _accountRepository = accountRepository; 
     }
-
-
-
     public async Task<IReadOnlyList<ReadAccountDTO>> Handle(
     GetAllAccountsQuery query,
     CancellationToken ct)
@@ -28,7 +24,8 @@ public class GetAllAccountsHandler
             Id = account.Id,
             UserId = account.UserId,
             AccountNumber = account.AccountNumber.Value,
-            Balance = account.Balance,
+            BalanceAmount = account.Balance.Amount,
+            BalanceCurrency = account.Balance.Currency,
             CreatedAt = account.CreatedAt,
             UpdatedAt = account.UpdatedAt,
             IsActive = account.IsActive

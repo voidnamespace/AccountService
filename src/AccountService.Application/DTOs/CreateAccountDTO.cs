@@ -1,8 +1,11 @@
-﻿namespace AccountService.Application.DTOs;
+﻿using AccountService.Domain.Enums;
+
+namespace AccountService.Application.DTOs;
 
 public class CreateAccountRequest
 {
     public Guid UserId { get; set; }
+    public Currency Currency { get; set; }
 }
 
 public class CreateAccountResponse
