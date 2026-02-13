@@ -22,7 +22,7 @@ public class Startup
         services.AddControllers();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerConfiguration();
-
+        services.AddHealthChecks();
     }
 
 
@@ -31,6 +31,7 @@ public class Startup
         app.MapControllers();
         app.UseHttpsRedirection();
         app.UseSwaggerConfiguration();
+        app.MapHealthChecks("/health");
         using (var scope = app.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<AccountDbContext>();
