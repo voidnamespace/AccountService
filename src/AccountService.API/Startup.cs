@@ -1,6 +1,8 @@
 ﻿using AccountService.API.Extensions;
 using AccountService.Application;
 using AccountService.Infrastructure.Data;
+using AspNetCoreRateLimit;
+using AuthService.API.Extensions;
 using Microsoft.EntityFrameworkCore;
 namespace AccountService.API;
 
@@ -22,13 +24,16 @@ public class Startup
         services.AddEndpointsApiExplorer();
         services.AddSwaggerConfiguration();
         services.AddHealthChecksConfiguration(Configuration);
+        services.AddRateLimitingConfiguration(Configuration);
+
     }
 
     public void Configure(WebApplication app, IWebHostEnvironment env)
     {
-        app.MapControllers();
         app.UseHttpsRedirection();
         app.UseSwaggerConfiguration();
+        app.UseIpRateLimiting();
+        app.MapControllers();
         app.MapHealthCheckEndpoints();
         using (var scope = app.Services.CreateScope())
         {
