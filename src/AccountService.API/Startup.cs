@@ -13,7 +13,6 @@ public class Startup
         Configuration = configuration;
     }
 
-
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddMediatR(cfg =>
@@ -22,16 +21,15 @@ public class Startup
         services.AddControllers();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerConfiguration();
-        services.AddHealthChecks();
+        services.AddHealthChecksConfiguration(Configuration);
     }
-
 
     public void Configure(WebApplication app, IWebHostEnvironment env)
     {
         app.MapControllers();
         app.UseHttpsRedirection();
         app.UseSwaggerConfiguration();
-        app.MapHealthChecks("/health");
+        app.MapHealthCheckEndpoints();
         using (var scope = app.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<AccountDbContext>();
@@ -53,9 +51,5 @@ public class Startup
                 }
             }
         }
-
-
     }
-
-
 }
